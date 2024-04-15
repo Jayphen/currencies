@@ -6,24 +6,14 @@ export type Currency = {
   name: string;
 };
 
-const currencies = new Map<string, Currency>();
-currencies.set("USD", { flag: "🇺🇸 ", currencyCode: "USD", name: "US Dollar" });
-currencies.set("SGD", {
-  flag: "🇸🇬",
-  currencyCode: "SGD",
-  name: "Singapore Dollar",
-});
-currencies.set("AUD", {
-  flag: "🇦🇺",
-  currencyCode: "AUD",
-  name: "Australian Dollar",
-});
-currencies.set("EUR", { flag: "🇪🇺", currencyCode: "EUR", name: "Euro" });
-currencies.set("JPY", {
-  flag: "🇯🇵",
-  currencyCode: "JPY",
-  name: "Japanese Yen",
-});
+const currencies = new Map<string, Currency>([
+  ["USD", { flag: "🇺🇸 ", currencyCode: "USD", name: "US Dollar" }],
+  ["SGD", { flag: "🇸🇬", currencyCode: "SGD", name: "Singapore Dollar" }],
+  ["AUD", { flag: "🇦🇺", currencyCode: "AUD", name: "Australian Dollar" }],
+  ["EUR", { flag: "🇪🇺", currencyCode: "EUR", name: "Euro" }],
+  ["NZD", { flag: "🇳🇿", currencyCode: "NZD", name: "New Zealand Dollar" }],
+  ["JPY", { flag: "🇯🇵", currencyCode: "JPY", name: "Japanese Yen" }],
+]);
 
 export const formInitialState = {
   from: "USD",

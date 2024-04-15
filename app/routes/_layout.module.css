@@ -58,6 +58,13 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  @container wrapper (width < 700px) {
+    & {
+      grid-row: auto;
+      flex-direction: column;
+      align-items: start;
+    }
+  }
 }
 
 .error {

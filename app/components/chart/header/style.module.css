@@ -7,6 +7,11 @@
   &[data-movement-direction="loss"] {
     color: var(--red-dark);
   }
+
+  @container wrapper (width < 550px) {
+    display: block;
+    margin-inline: 0;
+  }
 }
 
 .currency-full {

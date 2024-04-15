@@ -39,6 +39,7 @@ export function LineChart({ data }: { data: LoaderResponse["rates"] }) {
         snapTooltipToDatumY
         showVerticalCrosshair
         showSeriesGlyphs
+        glyphStyle={{ fill: "var(--accent-color)" }}
         renderTooltip={({ tooltipData }) =>
           tooltipData && (
             <div className={styles.tooltip}>

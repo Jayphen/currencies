@@ -8,7 +8,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [
     !process.env.VITEST && remixCloudflareDevProxy(),
-    !process.env.VITEST && remix(),
+    !process.env.VITEST &&
+      remix({
+        ignoredRouteFiles: ["**/*.css"],
+      }),
     tsconfigPaths(),
   ],
   test: {

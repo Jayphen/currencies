@@ -52,6 +52,14 @@
   }
 }
 
+.period {
+  --input-height: 2rem;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .error {
   color: var(--red-dark);
 }

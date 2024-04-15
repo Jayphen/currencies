@@ -18,13 +18,11 @@ export function getDateBeforeToday(interval: FormState["range"]) {
       pastDate = new Date(today.setMonth(today.getMonth() - 6));
       break;
     default:
-      throw new Error(
-        'Invalid interval. Choose "week", "month", or "6months".'
-      );
+      return interval;
   }
 
   const formattedDate = pastDate.toISOString().split("T")[0];
-  return formattedDate + "..";
+  return formattedDate;
 }
 
 export function getRangeFromUrl(url: URL) {

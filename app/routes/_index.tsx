@@ -10,13 +10,14 @@ import { ChartHeader } from "~/components/chart/header/ChartHeader";
 import { useCurrencyForm } from "~/components/currencies/currencyFormReducer";
 import styles from "./_layout.module.css";
 import { LineChart } from "~/components/chart/line-chart/LineChart";
-import { RangePresets } from "~/components/date/RangePresets";
-import { getRangeFromUrl } from "~/server/dateRange.server";
+import { getRangeFromUrl } from "~/server/dateRange";
 import { cache } from "~/server/cache.server";
 import { getCurrenciesFromUrl } from "~/server/currencies.server";
 import { CurrencySelector } from "~/components/currencies/CurrencySelector";
-import { FrankfurterApi } from "~/server/txService.server";
+import { DateRange, FrankfurterApi, Period } from "~/server/txService.server";
 import { LoaderResponse, mapDtoToResponse } from "~/server/mapDto.server";
+import { DatePicker } from "~/components/date/date-picker/DatePicker";
+import { RangePresets } from "~/components/date/range-presets/RangePresets";
 
 export const meta: MetaFunction = () => {
   return [
@@ -43,7 +44,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     const txService = new FrankfurterApi();
 
-    const result = await txService.getRecentExchangeRates(range, from, to);
+    const result = range.includes("..")
+      ? await txService.getRangeExchangeRates(range as DateRange, from, to)
+      : await txService.getRecentExchangeRates(range as Period, from, to);
 
     if (!result.ok) {
       // The API returns a 404 when comparing EUR to EUR for instance
@@ -111,7 +114,12 @@ export default function Index() {
             movement={data.movement}
           />
         )}
-        <RangePresets selected={formState.range} setRange={setRange} />
+
+        <div className={styles.period}>
+          <RangePresets selected={formState.range} setRange={setRange} />
+
+          <DatePicker setRange={setRange} selectedRange={formState.range} />
+        </div>
 
         <noscript>
           <button type="submit">Submit</button>

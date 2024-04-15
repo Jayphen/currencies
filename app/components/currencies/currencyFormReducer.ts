@@ -9,7 +9,7 @@ export type Currency = {
 export type FormState = {
   from: string;
   to: string;
-  range: "1w" | "1m" | "6m";
+  range: "1w" | "1m" | "6m" | `${string}..${string}`;
 };
 
 const currencies = new Map<string, Currency>([

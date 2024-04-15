@@ -20,7 +20,8 @@
   --background-color: var(--grey-50);
   --chart-line: var(--blue-dark);
 
-  --font-family-sans: Inter;
+  --font-family-sans: Inter system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif;
   --font-color-primary: var(--grey-950);
   --font-color-secondary: var(--grey-700);
   --font-color-tertiary: var(--grey-500);

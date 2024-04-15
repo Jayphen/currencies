@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { FrankfurterApi } from "../txService.server";
 
-vi.mock("../dateRange.server", () => ({
-  getDateBeforeToday: vi.fn(() => "1week.."), // Mocking as if "1week.." is the result for a week
+vi.mock("../dateRange", () => ({
+  getDateBeforeToday: vi.fn(() => "1week"), // Mocking as if "1week.." is the result for a week
 }));
 
 describe("FrankfurterApi", () => {

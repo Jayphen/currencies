@@ -1,4 +1,4 @@
-import { FormState } from "../currencies/currencyFormReducer";
+import { FormState } from "~/components/currencies/currencyFormReducer";
 import styles from "./style.module.css";
 
 export function RangePresets({

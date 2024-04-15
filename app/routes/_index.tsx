@@ -21,10 +21,10 @@ import { RangePresets } from "~/components/date/range-presets/RangePresets";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: "Currency trend chart" },
     {
       name: "description",
-      content: "Welcome to Remix! Using Vite and Cloudflare!",
+      content: "A currency trend chart using the Frankfurter API",
     },
   ];
 };

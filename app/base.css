@@ -18,7 +18,7 @@
   --info-light: var(--blue-light);
   --accent-color: var(--purple);
   --background-color: var(--grey-50);
-  --chart-line: var(--blue);
+  --chart-line: var(--blue-dark);
 
   --font-family-sans: Inter;
   --font-color-primary: var(--grey-950);

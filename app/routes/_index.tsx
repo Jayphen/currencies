@@ -13,6 +13,7 @@ import {
   useCurrencyForm,
 } from "~/components/currencies/currencyFormReducer";
 import styles from "./_layout.module.css";
+import { LineChart } from "~/components/chart/line-chart/LineChart";
 
 interface ApiResult {
   amount: number;
@@ -21,11 +22,17 @@ interface ApiResult {
   rates: Record<string, Record<string, number>>;
 }
 
-interface LoaderResponse extends ApiResult {
+export interface LoaderResponse {
+  start_date: string;
+  end_date: string;
   movement: {
     value: number;
     direction: "gain" | "loss";
   };
+  rates: {
+    x: string;
+    y: number;
+  }[];
   error?: string;
 }
 
@@ -63,7 +70,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     if (result.status === 404) {
       // The API returns a 404 when comparing EUR to EUR for instance
       return json<Partial<LoaderResponse>>(
-        { error: "Cannot compare currency with itself" },
+        {
+          error:
+            "Cannot compare currency with itself. Please choose a different currency pair.",
+        },
         { status: 400 }
       );
     }
@@ -78,8 +88,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
     const direction = movement >= 0 ? "gain" : "loss";
 
     const response: LoaderResponse = {
-      ...data,
+      start_date: data.start_date,
+      end_date: data.end_date,
       movement: { value: roundToTwoDecimalPlaces(movement), direction },
+      rates: Object.keys(data.rates).map((dateKey) => {
+        return {
+          x: dateKey,
+          y: data.rates[dateKey][to],
+        };
+      }),
     };
 
     cache.set(key, response);
@@ -151,7 +168,8 @@ export default function Index() {
           movement={data.movement}
         />
       )}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data.rates && <LineChart data={data.rates} />}
+      {data.error && <div className={styles.error}>{data.error}</div>}
     </main>
   );
 }

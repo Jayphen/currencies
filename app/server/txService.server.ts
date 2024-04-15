@@ -22,7 +22,7 @@ interface TxService {
 export class FrankfurterApi implements TxService {
   constructor(
     private baseUrl: string = "https://api.frankfurter.app/",
-    private fetcher: typeof fetch = global.fetch
+    private fetcher: typeof fetch = fetch.bind(globalThis)
   ) {}
 
   async getRecentExchangeRates(

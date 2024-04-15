@@ -1,48 +1,51 @@
-# Welcome to Remix + Vite!
+# Currency trend chart
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
-
-## Typegen
-
-Generate types for your Cloudflare bindings in `wrangler.toml`:
-
-```sh
-npm run typegen
-```
-
-You will need to rerun typegen whenever you make changes to `wrangler.toml`.
+A little app that that shows the historical trend of a currency pair using [Airbnb's visx library](https://airbnb.io/visx).
 
 ## Development
+
+This app is built using [Remix][remix] and [Vite][vite]. To get started, you'll need to install dependencies:
+
+```sh
+pnpm i
+```
 
 Run the Vite dev server:
 
 ```sh
-npm run dev
+pnpm run dev
 ```
+
+This app is intended to be deployed to Cloudflare Pages, and includes [Wrangler][wrangler] to facilitate local development inside a Cloudflare Pages-like environment.
 
 To run Wrangler:
 
 ```sh
-npm run build
-npm run start
+pnpm run build
+pnpm run start
 ```
 
 ## Deployment
 
-> [!WARNING]  
-> Cloudflare does _not_ use `wrangler.toml` to configure deployment bindings.
-> You **MUST** [configure deployment bindings manually in the Cloudflare dashboard][bindings].
-
-First, build your app for production:
+First, build the app for production:
 
 ```sh
-npm run build
+pnpm run build
 ```
 
-Then, deploy your app to Cloudflare Pages:
+Then, deploy the app to Cloudflare Pages:
 
 ```sh
-npm run deploy
+pnpm run deploy
 ```
+
+## API
+
+This application makes use of the API provided by [Frankfurter][api]. This API does not seem to have rate limiting, however I have implemented a (very!) basic in-memory cache to avoid repeatedly hitting the endpoint. Given more time, I would recommend using Cloudflare KV for caching the responses, as it is relatively trivial to set up once deployed to Cloudflare Pages.
+
 
 [bindings]: https://developers.cloudflare.com/pages/functions/bindings/
+[remix]: https://remix.run/docs/en/main
+[vite]: https://vitejs.dev/
+[wrangler]: https://developers.cloudflare.com/workers/wrangler/
+[api]: https://www.frankfurter.app/

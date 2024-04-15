@@ -1,0 +1,11 @@
+.tooltip {
+  font-weight: normal;
+  font-family: var(--font-family-sans);
+  padding: 0.25rem;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+    font-weight: 700;
+  }
+}

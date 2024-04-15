@@ -17,6 +17,21 @@ const currencies: Currency[] = [
     currencyCode: "SGD",
     name: "Singapore Dollar",
   },
+  {
+    flag: "🇦🇺",
+    currencyCode: "AUD",
+    name: "Australian Dollar",
+  },
+  {
+    flag: "🇪🇺",
+    currencyCode: "EUR",
+    name: "Euro",
+  },
+  {
+    flag: "🇯🇵",
+    currencyCode: "JPY",
+    name: "Japanese Yen",
+  },
 ];
 
 const formInitialState = {

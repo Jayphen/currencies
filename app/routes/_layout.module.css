@@ -1,0 +1,42 @@
+.container {
+  --button-height: 42px;
+
+  background: var(--white);
+  padding: 2.5rem;
+  box-shadow: var(--background-shadow);
+  max-width: 70rem;
+  border-radius: 0.5rem;
+  margin: auto;
+
+  form {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr min-content 1fr;
+    margin-block-end: 1.5rem;
+    align-items: end;
+
+    button {
+      border-radius: 50%;
+      background: var(--white) url("/arrows.svg") 50%;
+      background-repeat: no-repeat;
+      border: 1px solid var(--grey-300);
+      appearance: none;
+      width: var(--button-height);
+      height: var(--button-height);
+      cursor: pointer;
+      transition: border 0.2s linear;
+
+      &:hover {
+        border: 1px solid var(--accent-color);
+      }
+    }
+
+    select {
+      appearance: none;
+      height: var(--button-height);
+      border: 1px solid var(--grey-300);
+      padding-inline: 0.5rem;
+      border-radius: 0.25rem;
+    }
+  }
+}

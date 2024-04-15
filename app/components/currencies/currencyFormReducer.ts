@@ -1,5 +1,4 @@
-import { useFetcher, useSearchParams } from "@remix-run/react";
-import { FormEvent, MouseEvent, useReducer } from "react";
+import { useReducer } from "react";
 
 export type Currency = {
   currencyCode: string;
@@ -7,35 +6,26 @@ export type Currency = {
   name: string;
 };
 
-const currencies: Currency[] = [
-  {
-    flag: "🇺🇸 ",
-    currencyCode: "USD",
-    name: "US Dollar",
-  },
-  {
-    flag: "🇸🇬",
-    currencyCode: "SGD",
-    name: "Singapore Dollar",
-  },
-  {
-    flag: "🇦🇺",
-    currencyCode: "AUD",
-    name: "Australian Dollar",
-  },
-  {
-    flag: "🇪🇺",
-    currencyCode: "EUR",
-    name: "Euro",
-  },
-  {
-    flag: "🇯🇵",
-    currencyCode: "JPY",
-    name: "Japanese Yen",
-  },
-];
+const currencies = new Map<string, Currency>();
+currencies.set("USD", { flag: "🇺🇸 ", currencyCode: "USD", name: "US Dollar" });
+currencies.set("SGD", {
+  flag: "🇸🇬",
+  currencyCode: "SGD",
+  name: "Singapore Dollar",
+});
+currencies.set("AUD", {
+  flag: "🇦🇺",
+  currencyCode: "AUD",
+  name: "Australian Dollar",
+});
+currencies.set("EUR", { flag: "🇪🇺", currencyCode: "EUR", name: "Euro" });
+currencies.set("JPY", {
+  flag: "🇯🇵",
+  currencyCode: "JPY",
+  name: "Japanese Yen",
+});
 
-const formInitialState = {
+export const formInitialState = {
   from: "USD",
   to: "SGD",
 };
@@ -97,6 +87,7 @@ export function useCurrencyForm(searchParams?: URLSearchParams) {
     formState,
     setCurrency,
     swapCurrencies,
-    currencies,
+    currencies: [...currencies.values()],
+    currencyMap: currencies,
   };
 }

@@ -1,0 +1,16 @@
+.movement {
+  margin-inline-start: 1rem;
+  display: inline-block;
+  color: var(--success-dark);
+  font-weight: 500;
+
+  &[data-movement-direction="loss"] {
+    color: var(--red-dark);
+  }
+}
+
+.currency-full {
+  margin-block-start: 0;
+  color: var(--font-color-tertiary);
+  font-size: 0.75rem;
+}

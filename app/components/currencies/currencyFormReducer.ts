@@ -6,6 +6,12 @@ export type Currency = {
   name: string;
 };
 
+export type FormState = {
+  from: string;
+  to: string;
+  range: "1w" | "1m" | "6m";
+};
+
 const currencies = new Map<string, Currency>([
   ["USD", { flag: "🇺🇸 ", currencyCode: "USD", name: "US Dollar" }],
   ["SGD", { flag: "🇸🇬", currencyCode: "SGD", name: "Singapore Dollar" }],
@@ -15,19 +21,22 @@ const currencies = new Map<string, Currency>([
   ["JPY", { flag: "🇯🇵", currencyCode: "JPY", name: "Japanese Yen" }],
 ]);
 
-export const formInitialState = {
+export const formInitialState: FormState = {
   from: "USD",
   to: "SGD",
+  range: "6m",
 };
-
-type FormState = typeof formInitialState;
 
 export type FormAction =
   | {
       type: "SET_CURRENCY";
       payload: { position: keyof FormState; currencyCode: string };
     }
-  | { type: "SWAP_CURRENCIES" };
+  | { type: "SWAP_CURRENCIES" }
+  | {
+      type: "SET_RANGE_PRESET";
+      payload: { preset: FormState["range"] };
+    };
 
 export function formReducer(state: FormState, action: FormAction) {
   switch (action.type) {
@@ -45,6 +54,12 @@ export function formReducer(state: FormState, action: FormAction) {
         from: state.to,
       };
     }
+    case "SET_RANGE_PRESET": {
+      return {
+        ...state,
+        range: action.payload.preset,
+      };
+    }
   }
 }
 
@@ -60,10 +75,16 @@ export function setCurrencyDispatch(dispatcher: React.Dispatch<any>) {
 export function useCurrencyForm(searchParams?: URLSearchParams) {
   let initialState = { ...formInitialState };
 
-  if (searchParams && searchParams.has("from") && searchParams.has("to")) {
+  if (
+    searchParams &&
+    searchParams.has("from") &&
+    searchParams.has("to") &&
+    searchParams.has("range")
+  ) {
     initialState = {
       from: searchParams.get("from")!,
       to: searchParams.get("to")!,
+      range: searchParams.get("range") as FormState["range"],
     };
   }
 
@@ -72,6 +93,9 @@ export function useCurrencyForm(searchParams?: URLSearchParams) {
   const swapCurrencies = () => {
     dispatch({ type: "SWAP_CURRENCIES" });
   };
+  const setRange = (range: FormState["range"]) => {
+    dispatch({ type: "SET_RANGE_PRESET", payload: { preset: range } });
+  };
 
   return {
     formState,
@@ -79,5 +103,6 @@ export function useCurrencyForm(searchParams?: URLSearchParams) {
     swapCurrencies,
     currencies: [...currencies.values()],
     currencyMap: currencies,
+    setRange,
   };
 }

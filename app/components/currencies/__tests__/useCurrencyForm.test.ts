@@ -24,10 +24,21 @@ describe("useCurrencyForm", () => {
     expect(result.current.formState.from).toBe("EUR");
   });
 
+  it("should set range correctly", () => {
+    const { result } = renderHook(() => useCurrencyForm());
+
+    act(() => {
+      result.current.setRange("1m");
+    });
+
+    expect(result.current.formState.range).toBe("1m");
+  });
+
   it("initializes formState correctly from provided searchParams", () => {
     const mockSearchParams = new URLSearchParams();
     mockSearchParams.set("from", "EUR");
     mockSearchParams.set("to", "USD");
+    mockSearchParams.set("range", "1w");
 
     const { result } = renderHook(() => useCurrencyForm(mockSearchParams));
 
@@ -40,6 +51,7 @@ describe("useCurrencyForm", () => {
 
     expect(result.current.formState.from).toBe("USD");
     expect(result.current.formState.to).toBe("SGD");
+    expect(result.current.formState.range).toBe("6m");
   });
 
   it('ignores searchParams when "from" and "to" are not both provided', () => {
@@ -52,5 +64,6 @@ describe("useCurrencyForm", () => {
 
     expect(result.current.formState.from).toBe("USD");
     expect(result.current.formState.to).toBe("SGD");
+    expect(result.current.formState.range).toBe("6m");
   });
 });

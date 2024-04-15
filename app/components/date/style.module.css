@@ -1,0 +1,36 @@
+.rangePresets {
+  grid-area: 3/1/3/4;
+}
+
+.fieldset {
+  border: 1px solid var(--grey-300);
+  border-radius: 4px;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+
+  label {
+    position: relative;
+    padding: 0.5rem;
+    border-radius: 2px;
+  }
+
+  input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+
+  label:has(input:checked) {
+    background: var(--grey-200);
+  }
+  label:not(:has(input:checked)) {
+    &:hover {
+      background: var(--grey-50);
+    }
+  }
+}

@@ -20,8 +20,7 @@ export function CurrencySelect({
       {currencies.map((currency) => {
         return (
           <option value={currency.currencyCode} key={currency.currencyCode}>
-            {currency.flag} {currency.currencyCode} -{" "}
-            <span>{currency.name}</span>
+            {currency.flag} {currency.currencyCode} - {currency.name}
           </option>
         );
       })}

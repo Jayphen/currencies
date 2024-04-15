@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useFetcher, useSearchParams } from "@remix-run/react";
+import { FormEvent, MouseEvent, useReducer } from "react";
 
 export type Currency = {
   currencyCode: string;
@@ -76,10 +77,21 @@ export function setCurrencyDispatch(dispatcher: React.Dispatch<any>) {
   };
 }
 
-export function useCurrencyForm() {
-  const [formState, dispatch] = useReducer(formReducer, formInitialState);
+export function useCurrencyForm(searchParams?: URLSearchParams) {
+  let initialState = { ...formInitialState };
+
+  if (searchParams && searchParams.has("from") && searchParams.has("to")) {
+    initialState = {
+      from: searchParams.get("from")!,
+      to: searchParams.get("to")!,
+    };
+  }
+
+  const [formState, dispatch] = useReducer(formReducer, initialState);
   const setCurrency = setCurrencyDispatch(dispatch);
-  const swapCurrencies = () => dispatch({ type: "SWAP_CURRENCIES" });
+  const swapCurrencies = () => {
+    dispatch({ type: "SWAP_CURRENCIES" });
+  };
 
   return {
     formState,

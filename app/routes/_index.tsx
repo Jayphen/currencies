@@ -7,16 +7,16 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { ChartHeader } from "~/components/chart/header/ChartHeader";
-import { CurrencySelect } from "~/components/currencies/CurrencySelect";
 import { useCurrencyForm } from "~/components/currencies/currencyFormReducer";
 import styles from "./_layout.module.css";
 import { LineChart } from "~/components/chart/line-chart/LineChart";
 import { RangePresets } from "~/components/date/RangePresets";
-import { getDateBeforeToday, getRangeFromUrl } from "~/server/dateRange.server";
+import { getRangeFromUrl } from "~/server/dateRange.server";
 import { cache } from "~/server/cache.server";
 import { getCurrenciesFromUrl } from "~/server/currencies.server";
-import { ApiResult, LoaderResponse, mapDtoToResponse } from "~/server/mapDto";
 import { CurrencySelector } from "~/components/currencies/CurrencySelector";
+import { FrankfurterApi } from "~/server/txService.server";
+import { LoaderResponse, mapDtoToResponse } from "~/server/mapDto.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,8 +27,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-const API_BASE_URL = "https://api.frankfurter.app/";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -43,24 +41,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
       return json(cache.get(key) as LoaderResponse);
     }
 
-    const result = await fetch(
-      API_BASE_URL + `${getDateBeforeToday(range)}?from=${from}&to=${to}`
-    );
+    const txService = new FrankfurterApi();
 
-    if (result.status === 404) {
+    const result = await txService.getRecentExchangeRates(range, from, to);
+
+    if (!result.ok) {
       // The API returns a 404 when comparing EUR to EUR for instance
       return json<Partial<LoaderResponse>>(
         {
-          error:
-            "Cannot compare currency with itself. Please choose a different currency pair.",
+          error: result.error.message,
         },
         { status: 400 }
       );
     }
 
-    let data: ApiResult = await result.json();
-
-    const response = mapDtoToResponse(data, to);
+    const response = mapDtoToResponse(result.value, to);
 
     cache.set(key, response);
 

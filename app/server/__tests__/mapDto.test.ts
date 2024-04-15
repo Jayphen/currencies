@@ -3,7 +3,7 @@ import {
   calculateMovement,
   mapDtoToResponse,
   roundToTwoDecimalPlaces,
-} from "../mapDto";
+} from "../mapDto.server";
 
 const mockApiResult = {
   start_date: "2023-01-01",

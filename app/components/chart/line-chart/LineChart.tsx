@@ -5,8 +5,8 @@ import {
   Tooltip,
   XYChart,
 } from "@visx/xychart";
-import { LoaderResponse } from "~/routes/_index";
 import styles from "./style.module.css";
+import { LoaderResponse } from "~/server/mapDto.server";
 
 type Rates = LoaderResponse["rates"][number];
 
@@ -24,6 +24,7 @@ export function LineChart({ data }: { data: LoaderResponse["rates"] }) {
         zero: false,
       }}
       height={400}
+      margin={{ top: 0, left: 0, right: 55, bottom: 30 }}
     >
       <AnimatedGrid columns={false} strokeDasharray="3,4" numTicks={5} />
       <AnimatedAxis orientation="bottom" numTicks={5} />
